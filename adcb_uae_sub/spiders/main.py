@@ -5,8 +5,6 @@ import scrapy
 from adcb_uae_sub.items import Product
 from lxml import html
 import os
-import re
-from scrapy_playwright.page import PageMethod
 from datetime import date
 
 
