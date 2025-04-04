@@ -215,16 +215,19 @@ class Adcb_uae_subSpider(scrapy.Spider):
             OD_Limit_End_Date = OD_Limit_End_Date.split('</td>')[0].strip()
         
         
-        try:
-            Days_Past_Due  = [
-                item for item in cleaned_text.replace('&=nbsp;', '').split('Days Past Due')[-1].strip().split('</td>') if item.strip()
-                ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
-        except Exception as e:
-            print(e)
-            Days_Past_Due = ''
+        # try:
+        #     Days_Past_Due  = [
+        #         item for item in cleaned_text.replace('&=nbsp;', '').split('Days Past Due')[-1].strip().split('</td>') if item.strip()
+        #         ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
+        # except Exception as e:
+        #     print(e)
+        #     Days_Past_Due = ''
 
-        if Days_Past_Due and '</td>' in Days_Past_Due:
-            Days_Past_Due = Days_Past_Due.split('</td>')[0].strip()
+        # if Days_Past_Due and '</td>' in Days_Past_Due:
+        #     Days_Past_Due = Days_Past_Due.split('</td>')[0].strip()
+        
+        # print(Days_Past_Due)
+        # return
         
         try:
             Current_Balance  = [
@@ -414,9 +417,9 @@ class Adcb_uae_subSpider(scrapy.Spider):
                 A_C_no = data_items.get('A/C No.', '')
                 Credit_card_limit = clean(data_items.get('Credit card limit', ''))
                 Last_statement_date = clean(data_items.get('Last statement date', ''))
-                Days_past_due = clean(data_items.get('Days past due', ''))
-                if Days_past_due and '</td>' in Days_past_due:
-                    Days_past_due = Days_past_due.split('</td>')[0].strip()
+                # Card_Days_past_due = clean(data_items.get('Days past due', ''))
+                # if Card_Days_past_due and '</td>' in Card_Days_past_due:
+                #     Card_Days_past_due = Card_Days_past_due.split('</td>')[0].strip()
                 if A_C_no and 'td>' in A_C_no:
                     A_C_no = A_C_no.split('td>')[0].strip()
                 try:
@@ -427,7 +430,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
                 data['A_C_no'] = str(A_C_no).replace('&nbsp;', '').replace('&nbsp;', '') if A_C_no  and len(A_C_no) < 50 else ''
                 data['Last_statement_date'] = str(Last_statement_date).replace('&nbsp;', '') if Last_statement_date and len(Last_statement_date) < 30 else ''
                 data['Credit_card_limit'] = str(Credit_card_limit).replace('&nbsp;', '') if Credit_card_limit and len(Credit_card_limit) < 30 else ''
-                data['Days_past_due'] = str(Days_past_due).replace('&nbsp;', '') if Days_past_due and len(Days_past_due) < 30 else ''
+                # data['Card_Days_past_due'] = str(Card_Days_past_due).replace('&nbsp;', '') if Card_Days_past_due and len(Card_Days_past_due) < 30 else ''
 
         data['Issue_date'] = clean(Issue_date).replace('&nbsp;', '') if Issue_date and len(Issue_date) < 10 else ''
         data['Next_due_date'] = clean(Next_due_date).replace('&nbsp;', '') if Next_due_date and len(Next_due_date) < 10 else ''
@@ -442,7 +445,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
         data['Product_Code'] = str(Product_Code).replace('&nbsp;', '') if Product_Code and len(Product_Code) < 30 else ''
         data['OD_Limit_Set_Date'] = str(OD_Limit_Set_Date).replace('&nbsp;', '') if OD_Limit_Set_Date and len(OD_Limit_Set_Date) < 20 else ''
         data['OD_Limit_End_Date'] = str(OD_Limit_End_Date).replace('&nbsp;', '') if OD_Limit_End_Date and len(OD_Limit_End_Date) < 20 else ''
-        data['Days_Past_Due'] = str(Days_Past_Due).replace('&nbsp;', '') if Days_Past_Due and len(Days_Past_Due) < 20 else ''
+        # data['Days_Past_Due'] = str(Days_Past_Due).replace('&nbsp;', '') if Days_Past_Due and len(Days_Past_Due) < 20 else ''
         data['Current_Balance'] = str(Current_Balance).replace('&nbsp;', '') if Current_Balance and len(Current_Balance) < 20 else ''
         data['Interest_Amount'] = str(Interest_Amount).replace('&nbsp;', '') if Interest_Amount and len(Interest_Amount) < 20 else ''
         data['Utilisation'] = str(Utilisation).replace('&nbsp;', '') if Utilisation and len(Utilisation) < 20 else ''
