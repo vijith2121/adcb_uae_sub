@@ -19,7 +19,8 @@ class Adcb_uae_subSpider(scrapy.Spider):
     def start_requests(self):
         folder_path = os.path.dirname(os.path.abspath(__file__))
         for file_name in os.listdir(folder_path):
-            if file_name.endswith(".mhtml"):
+            if file_name.endswith(".mhtml") and '-' in file_name:
+                # print(file_name)
                 file_path = f"file://{os.path.abspath(os.path.join(folder_path, file_name))}"
 
                 # file_path = 'file:///home/vijith/Downloads/OneDrive_2025-04-03/ADCB%20XUNB%20CM%20AND%20PRODUCT%20DETAILS/10007324/10007324%202.mhtml'
