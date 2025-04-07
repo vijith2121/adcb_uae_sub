@@ -19,7 +19,8 @@ class Adcb_uae_subSpider(scrapy.Spider):
     def start_requests(self):
         folder_path = os.path.dirname(os.path.abspath(__file__))
         for file_name in os.listdir(folder_path):
-            if file_name.endswith(".mhtml") and '-' in file_name:
+            # if file_name.endswith(".mhtml") and '-' in file_name:
+            if file_name.endswith(".mhtml"):
                 # print(file_name)
                 file_path = f"file://{os.path.abspath(os.path.join(folder_path, file_name))}"
 
