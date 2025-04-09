@@ -29,7 +29,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
                     url=file_path,
                     callback=self.parse,
                 )
-                # return
+                return
 
     def parse(self, response):
         parser = html.fromstring(response.text)
