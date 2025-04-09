@@ -387,8 +387,8 @@ class Adcb_uae_subSpider(scrapy.Spider):
         if Bucket_greater_6_amount and '</td>' in Bucket_greater_6_amount:
             Bucket_greater_6_amount = Bucket_greater_6_amount.split('</td>')[0].strip()
 
-        # scrape_date = date.today()
-        scrape_date = '2025-04-05'
+        scrape_date = date.today()
+        # scrape_date = '2025-04-07'
         items = parser.xpath(xpath_data)
         data = {}
         for item in items:
