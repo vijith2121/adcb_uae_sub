@@ -39,10 +39,8 @@ class Adcb_uae_subSpider(scrapy.Spider):
         xpath_data = "//td[contains(text(), 'CID No.')]//parent::tr//parent::tbody//tr"
 
         cleaned_text = response.text.replace("=3D", "=").replace("\n", "").replace("\r", "").replace("\t", "").replace("&nbsp;", " ").strip()
-        
         # print(cleaned_text)
         # return
-        
         try:
             Issue_date  = [
                 item for item in cleaned_text.replace('&=nbsp;', '').split('Issue date')[-1].strip().split('</td>') if item.strip()
