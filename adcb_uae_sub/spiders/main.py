@@ -1,7 +1,6 @@
 import scrapy
 # from adcb_uae_sub.items import Product
 from lxml import html
-import scrapy
 from adcb_uae_sub.items import Product
 from lxml import html
 import os
@@ -32,6 +31,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
                 # return
 
     def parse(self, response):
+        # return
         parser = html.fromstring(response.text)
 
         # xpath_address2 = "//td[contains(text(), 'Address')]//parent::tr//following-sibling::tr[1]/td[2]//text()"
@@ -385,8 +385,8 @@ class Adcb_uae_subSpider(scrapy.Spider):
         if Bucket_greater_6_amount and '</td>' in Bucket_greater_6_amount:
             Bucket_greater_6_amount = Bucket_greater_6_amount.split('</td>')[0].strip()
 
-        # scrape_date = date.today()
-        scrape_date = '2025-04-07'
+        scrape_date = date.today()
+        # scrape_date = '2025-04-07'
         items = parser.xpath(xpath_data)
         data = {}
         for item in items:
