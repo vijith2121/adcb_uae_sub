@@ -51,6 +51,33 @@ class Adcb_uae_subSpider(scrapy.Spider):
 
         if Issue_date and '</td>' in Issue_date:
             Issue_date = Issue_date.split('</td>')[0].strip()
+        
+        try:
+            flag  = [
+                item for item in cleaned_text.replace('&=nbsp;', '').split('Flag')[-1].strip().split('</td>') if item.strip()
+                ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
+        except Exception as e:
+            print(e)
+            flag = ''
+        
+        if flag and '</td>' in flag:
+            flag = flag.split('</td>')[0].strip()
+        
+        
+        try:
+            cycle_date  = [
+                item for item in cleaned_text.replace('&=nbsp;', '').split('Cycle date')[-1].strip().split('</td>') if item.strip()
+                ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
+        except Exception as e:
+            print(e)
+            cycle_date = ''
+        # print(cycle_date.split('</td>')[0])
+        if cycle_date and '</td>' in cycle_date:
+            cycle_date = cycle_date.split('</td>')[0].strip()
+        
+        
+        
+        
 
         try:
             Next_due_date  = [
@@ -195,7 +222,18 @@ class Adcb_uae_subSpider(scrapy.Spider):
 
         if Queue_Agent and '</td>' in Queue_Agent:
             Queue_Agent = Queue_Agent.split('</td>')[0].strip()
+            
+        
+        try:
+            Delinquency_string  = [
+                item for item in cleaned_text.replace('&=nbsp;', '').split('Delinquency string')[-1].strip().split('</td>') if item.strip()
+                ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
+        except Exception as e:
+            print(e)
+            Delinquency_string = ''
 
+        if Delinquency_string and '</td>' in Delinquency_string:
+            Delinquency_string = Delinquency_string.split('</td>')[0].strip()
         try:
             OD_Limit_Set_Date  = cleaned_text.split('OD Limit Set Date')[-1].strip().split('</td>')[1].strip().split('class="data">')[-1].replace('&=nbsp;', '')
         except Exception as e:
@@ -462,4 +500,10 @@ class Adcb_uae_subSpider(scrapy.Spider):
         data['Bucket_5_amount'] = str(Bucket_5_amount).replace('&nbsp;', '') if Bucket_5_amount and len(Bucket_5_amount) < 20 else ''
         data['Bucket_6_amount'] = str(Bucket_6_amount).replace('&nbsp;', '') if Bucket_6_amount and len(Bucket_6_amount) < 20 else ''
         data['Bucket_greater_6_amount'] = str(Bucket_greater_6_amount).replace('&nbsp;', '') if Bucket_greater_6_amount and len(Bucket_greater_6_amount) < 20 else ''
+
+        data['flag'] = str(flag).replace('&nbsp;', '') if flag and len(flag) < 20 else ''
+        data['cycle_date'] = str(cycle_date).replace('&nbsp;', '') if cycle_date and len(cycle_date) < 20 else ''
+        data['Queue_Agent'] = str(Queue_Agent).replace('&nbsp;', '') if Queue_Agent and len(Queue_Agent) < 20 else ''
+        data['Delinquency_string'] = str(Delinquency_string).replace('&nbsp;', '') if Delinquency_string and len(Delinquency_string) < 20 else ''
+        # print('========================', flag, cycle_date, Queue_Agent, Delinquency_string)
         yield Product(**data)

@@ -30,6 +30,11 @@ class Product(scrapy.Item):
     Total_Due = scrapy.Field()
     Expiry_flag = scrapy.Field()
     Current_Bucket_amount = scrapy.Field()
+    
+    flag = scrapy.Field()
+    cycle_date = scrapy.Field()
+    Queue_Agent = scrapy.Field()
+    Delinquency_string = scrapy.Field()
 
     Bucket_1_amount = scrapy.Field()
     Bucket_2_amount = scrapy.Field()
