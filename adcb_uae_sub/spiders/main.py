@@ -31,6 +31,8 @@ class Adcb_uae_subSpider(scrapy.Spider):
                 # return
 
     def parse(self, response):
+        # print(response.text)
+        
         # return
         parser = html.fromstring(response.text)
 
@@ -231,11 +233,15 @@ class Adcb_uae_subSpider(scrapy.Spider):
         except Exception as e:
             print(e)
             Delinquency_string = ''
-        
 
         if Delinquency_string and '</td>' in Delinquency_string:
             Delinquency_string = Delinquency_string.split('</td>')[0].strip()
         # print('==============', Delinquency_string)
+        if len(Delinquency_string) > 80:
+            Delinquency_string  = [
+                item for item in cleaned_text.replace('&=nbsp;', '').split('Delinquency String')[-1].strip().split('</td>') if item.strip()
+                ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
+        # print(Delinquency_string)
         try:
             OD_Limit_Set_Date  = cleaned_text.split('OD Limit Set Date')[-1].strip().split('</td>')[1].strip().split('class="data">')[-1].replace('&=nbsp;', '')
         except Exception as e:
