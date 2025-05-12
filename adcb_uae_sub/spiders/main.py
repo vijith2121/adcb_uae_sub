@@ -506,6 +506,6 @@ class Adcb_uae_subSpider(scrapy.Spider):
         data['flag'] = str(flag).replace('&nbsp;', '') if flag and len(flag) < 20 else ''
         data['cycle_date'] = str(cycle_date).replace('&nbsp;', '') if cycle_date and len(cycle_date) < 20 else ''
         data['Queue_Agent'] = str(Queue_Agent).replace('&nbsp;', '') if Queue_Agent and len(Queue_Agent) < 20 else ''
-        data['Delinquency_string'] = str(Delinquency_string).replace('&nbsp;', '') if Delinquency_string and len(Delinquency_string) < 50 else ''
+        data['Delinquency_string'] = str(Delinquency_string).replace('&nbsp;', '') if Delinquency_string and len(Delinquency_string) < 95 else ''
 
         yield Product(**data)
