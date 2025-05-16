@@ -430,7 +430,30 @@ class Adcb_uae_subSpider(scrapy.Spider):
 
         if Bucket_greater_6_amount and '</td>' in Bucket_greater_6_amount:
             Bucket_greater_6_amount = Bucket_greater_6_amount.split('</td>')[0].strip()
+            
+        try:
+            C_Bkt_N_Bkt  = [
+                item for item in cleaned_text.replace('&=nbsp;', '').split('C_Bkt / N_Bkt')[-1].strip().split('</td>') if item.strip()
+                ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
+        except Exception as e:
+            print(e)
+            C_Bkt_N_Bkt = ''
 
+        if C_Bkt_N_Bkt and '</td>' in C_Bkt_N_Bkt:
+            C_Bkt_N_Bkt = C_Bkt_N_Bkt.split('</td>')[0].strip()
+
+        try:
+            Start_of_Bucket_Next_Bucket  = [
+                item for item in cleaned_text.replace('&=nbsp;', '').split('Start of Bucket / Next Bucket')[-1].strip().split('</td>') if item.strip()
+                ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
+        except Exception as e:
+            print(e)
+            Start_of_Bucket_Next_Bucket = ''
+
+        if Start_of_Bucket_Next_Bucket and '</td>' in Start_of_Bucket_Next_Bucket:
+            Start_of_Bucket_Next_Bucket = Start_of_Bucket_Next_Bucket.split('</td>')[0].strip()
+        
+        # 1. C_Bkt / N_Bkt 2. Start of Bucket / Next Bucket
         scrape_date = date.today()
         # scrape_date = '2025-04-24'
         items = parser.xpath(xpath_data)
@@ -508,10 +531,10 @@ class Adcb_uae_subSpider(scrapy.Spider):
         data['Bucket_5_amount'] = str(Bucket_5_amount).replace('&nbsp;', '') if Bucket_5_amount and len(Bucket_5_amount) < 20 else ''
         data['Bucket_6_amount'] = str(Bucket_6_amount).replace('&nbsp;', '') if Bucket_6_amount and len(Bucket_6_amount) < 20 else ''
         data['Bucket_greater_6_amount'] = str(Bucket_greater_6_amount).replace('&nbsp;', '') if Bucket_greater_6_amount and len(Bucket_greater_6_amount) < 20 else ''
-
+        data['C_Bkt_N_Bkt'] = str(C_Bkt_N_Bkt).replace('&nbsp;', '') if C_Bkt_N_Bkt and len(C_Bkt_N_Bkt) < 20 else ''
         data['flag'] = str(flag).replace('&nbsp;', '') if flag and len(flag) < 20 else ''
         data['cycle_date'] = str(cycle_date).replace('&nbsp;', '') if cycle_date and len(cycle_date) < 20 else ''
         data['Queue_Agent'] = str(Queue_Agent).replace('&nbsp;', '') if Queue_Agent and len(Queue_Agent) < 20 else ''
         data['Delinquency_string'] = str(Delinquency_string).replace('&nbsp;', '') if Delinquency_string and len(Delinquency_string) < 95 else ''
-
+        data['Start_of_Bucket_Next_Bucket'] = str(Start_of_Bucket_Next_Bucket).replace('&nbsp;', '') if Start_of_Bucket_Next_Bucket and len(Start_of_Bucket_Next_Bucket) < 20 else ''
         yield Product(**data)

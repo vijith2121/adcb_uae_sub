@@ -35,6 +35,8 @@ class Product(scrapy.Item):
     cycle_date = scrapy.Field()
     Queue_Agent = scrapy.Field()
     Delinquency_string = scrapy.Field()
+    C_Bkt_N_Bkt = scrapy.Field()
+    Start_of_Bucket_Next_Bucket = scrapy.Field()
 
     Bucket_1_amount = scrapy.Field()
     Bucket_2_amount = scrapy.Field()
