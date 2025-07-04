@@ -155,6 +155,14 @@ class Adcb_uae_subSpider(scrapy.Spider):
         except Exception as e:
             print(e)
             Last_payment_date = ''
+        
+        if not Last_payment_date or len(Last_payment_date) > 1200:
+            try:
+                Last_payment_date  = cleaned_text.replace('&=nbsp;', '').split('Last payment Date')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
+                
+            except Exception as e:
+                print(e)
+                Last_payment_date = ''
 
         if Last_payment_date and '</td>' in Last_payment_date:
             Last_payment_date = Last_payment_date.split('</td>')[0].strip()
@@ -167,8 +175,16 @@ class Adcb_uae_subSpider(scrapy.Spider):
             print(e)
             Last_payment_amount = ''
 
+        if not Last_payment_amount or len(Last_payment_amount) > 1200:
+            try:
+                Last_payment_amount  = cleaned_text.replace('&=nbsp;', '').split('Last Payment Amount')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
+                
+            except Exception as e:
+                print(e)
+                Last_payment_amount = ''
+
         if Last_payment_amount and '</td>' in Last_payment_amount:
-            Last_payment_amount = Last_payment_amount.split('</td>')[0].strip()
+            Last_payment_amount = Last_payment_amount.split('</td>')[0].strip().replace('&nb=sp;', '')
         
         try:
             Card_status  = [
@@ -225,7 +241,6 @@ class Adcb_uae_subSpider(scrapy.Spider):
         if Queue_Agent and '</td>' in Queue_Agent:
             Queue_Agent = Queue_Agent.split('</td>')[0].strip()
             
-        
         try:
             Delinquency_string  = [
                 item for item in cleaned_text.replace('&=nbsp;', '').split('Delinquency string')[-1].strip().split('</td>') if item.strip()
@@ -342,7 +357,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
         if Expiry_flag and '</td>' in Expiry_flag:
             Expiry_flag = Expiry_flag.split('</td>')[0].strip()
 
-        
+        # print(cleaned_text)
         try:
             Current_Bucket_amount  = [
                 item for item in cleaned_text.replace('&=nbsp;', '').split('Current Bucket amount')[-1].strip().split('</td>') if item.strip()
@@ -361,7 +376,15 @@ class Adcb_uae_subSpider(scrapy.Spider):
         except Exception as e:
             print(e)
             Bucket_1_amount = ''
+        if not Bucket_1_amount or len(Bucket_1_amount) > 1200:
+            try:
+                Bucket_1_amount  = cleaned_text.replace('&=nbsp;', '').split('Bucket 1 Amount')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
+                
+            except Exception as e:
+                print(e)
+                Bucket_1_amount = ''
 
+        # print(cleaned_text.replace('&=nbsp;', '').split('Bucket 1 Amount')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip())
         if Bucket_1_amount and '</td>' in Bucket_1_amount:
             Bucket_1_amount = Bucket_1_amount.split('</td>')[0].strip()
         
@@ -372,6 +395,14 @@ class Adcb_uae_subSpider(scrapy.Spider):
         except Exception as e:
             print(e)
             Bucket_2_amount = ''
+        
+        if not Bucket_2_amount or len(Bucket_2_amount) > 1200:
+            try:
+                Bucket_2_amount  = cleaned_text.replace('&=nbsp;', '').split('Bucket 2 Amount')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
+                
+            except Exception as e:
+                print(e)
+                Bucket_2_amount = ''
 
         if Bucket_2_amount and '</td>' in Bucket_2_amount:
             Bucket_2_amount = Bucket_2_amount.split('</td>')[0].strip()
@@ -383,6 +414,14 @@ class Adcb_uae_subSpider(scrapy.Spider):
         except Exception as e:
             print(e)
             Bucket_3_amount = ''
+        
+        if not Bucket_3_amount or len(Bucket_3_amount) > 1200:
+            try:
+                Bucket_3_amount  = cleaned_text.replace('&=nbsp;', '').split('Bucket 3 Amount')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
+                
+            except Exception as e:
+                print(e)
+                Bucket_3_amount = ''
 
         if Bucket_3_amount and '</td>' in Bucket_3_amount:
             Bucket_3_amount = Bucket_3_amount.split('</td>')[0].strip()
@@ -395,6 +434,14 @@ class Adcb_uae_subSpider(scrapy.Spider):
             print(e)
             Bucket_4_amount = ''
 
+        if not Bucket_4_amount or len(Bucket_4_amount) > 1200:
+            try:
+                Bucket_4_amount  = cleaned_text.replace('&=nbsp;', '').split('Bucket 4 Amount')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
+                
+            except Exception as e:
+                print(e)
+                Bucket_4_amount = ''
+
         if Bucket_4_amount and '</td>' in Bucket_4_amount:
             Bucket_4_amount = Bucket_4_amount.split('</td>')[0].strip()
         
@@ -406,6 +453,15 @@ class Adcb_uae_subSpider(scrapy.Spider):
             print(e)
             Bucket_5_amount = ''
 
+        if not Bucket_5_amount or len(Bucket_5_amount) > 1200:
+            try:
+                Bucket_5_amount  = cleaned_text.replace('&=nbsp;', '').split('Bucket 5 Amount')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
+                
+            except Exception as e:
+                print(e)
+                Bucket_5_amount = ''
+
+
         if Bucket_5_amount and '</td>' in Bucket_5_amount:
             Bucket_5_amount = Bucket_5_amount.split('</td>')[0].strip()
         
@@ -416,6 +472,15 @@ class Adcb_uae_subSpider(scrapy.Spider):
         except Exception as e:
             print(e)
             Bucket_6_amount = ''
+        
+        
+        if not Bucket_6_amount or len(Bucket_6_amount) > 1200:
+            try:
+                Bucket_6_amount  = cleaned_text.replace('&=nbsp;', '').split('Bucket 6 Amount')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
+                
+            except Exception as e:
+                print(e)
+                Bucket_6_amount = ''
 
         if Bucket_6_amount and '</td>' in Bucket_6_amount:
             Bucket_6_amount = Bucket_6_amount.split('</td>')[0].strip()
@@ -427,6 +492,14 @@ class Adcb_uae_subSpider(scrapy.Spider):
         except Exception as e:
             print(e)
             Bucket_greater_6_amount = ''
+        
+        if not Bucket_greater_6_amount or len(Bucket_greater_6_amount) > 1200:
+            try:
+                Bucket_greater_6_amount  = cleaned_text.replace('&=nbsp;', '').split('Bucket greater 6 Amount')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
+                
+            except Exception as e:
+                print(e)
+                Bucket_greater_6_amount = ''
 
         if Bucket_greater_6_amount and '</td>' in Bucket_greater_6_amount:
             Bucket_greater_6_amount = Bucket_greater_6_amount.split('</td>')[0].strip()
@@ -452,7 +525,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
 
         if Start_of_Bucket_Next_Bucket and '</td>' in Start_of_Bucket_Next_Bucket:
             Start_of_Bucket_Next_Bucket = Start_of_Bucket_Next_Bucket.split('</td>')[0].strip()
-        
+
         # 1. C_Bkt / N_Bkt 2. Start of Bucket / Next Bucket
         scrape_date = date.today()
         # scrape_date = '2025-04-24'
@@ -510,7 +583,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
         data['Principal_OS'] = clean(Principal_OS).replace('&nbsp;', '') if Principal_OS and len(Principal_OS) < 25 else ''
         data['Interest_Profit_OS'] = clean(Interest_Profit_OS).replace('&nbsp;', '') if Interest_Profit_OS and len(Interest_Profit_OS) < 25 else ''
         data['Last_payment_date'] = clean(Last_payment_date).replace('&nbsp;', '') if Last_payment_date and len(Last_payment_date) < 25 else ''
-        data['Last_payment_amount'] = clean(Last_payment_amount).replace('&nbsp;', '') if Last_payment_amount and len(Last_payment_amount) < 25 else ''
+        data['Last_payment_amount'] = clean(Last_payment_amount).replace('&nbsp;', '').replace('&nb=sp;', '') if Last_payment_amount and len(Last_payment_amount) < 25 else ''
         data['scrape_date'] = str(scrape_date).replace('&nbsp;', '') if scrape_date else ''
         data['Product_Code'] = str(Product_Code).replace('&nbsp;', '') if Product_Code and len(Product_Code) < 30 else ''
         data['OD_Limit_Set_Date'] = str(OD_Limit_Set_Date).replace('&nbsp;', '') if OD_Limit_Set_Date and len(OD_Limit_Set_Date) < 20 else ''
@@ -528,7 +601,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
         data['Bucket_2_amount'] = str(Bucket_2_amount).replace('&nbsp;', '') if Bucket_2_amount and len(Bucket_2_amount) < 20 else ''
         data['Bucket_3_amount'] = str(Bucket_3_amount).replace('&nbsp;', '') if Bucket_3_amount and len(Bucket_3_amount) < 20 else ''
         data['Bucket_4_amount'] = str(Bucket_4_amount).replace('&nbsp;', '') if Bucket_4_amount and len(Bucket_4_amount) < 20 else ''
-        data['Bucket_5_amount'] = str(Bucket_5_amount).replace('&nbsp;', '') if Bucket_5_amount and len(Bucket_5_amount) < 20 else ''
+        data['Bucket_5_amount'] = str(Bucket_5_amount).replace('&nbsp;', '').replace('=', '').strip() if Bucket_5_amount and len(Bucket_5_amount) < 20 else ''
         data['Bucket_6_amount'] = str(Bucket_6_amount).replace('&nbsp;', '') if Bucket_6_amount and len(Bucket_6_amount) < 20 else ''
         data['Bucket_greater_6_amount'] = str(Bucket_greater_6_amount).replace('&nbsp;', '') if Bucket_greater_6_amount and len(Bucket_greater_6_amount) < 20 else ''
         data['C_Bkt_N_Bkt'] = str(C_Bkt_N_Bkt).replace('&nbsp;', '') if C_Bkt_N_Bkt and len(C_Bkt_N_Bkt) < 20 else ''
