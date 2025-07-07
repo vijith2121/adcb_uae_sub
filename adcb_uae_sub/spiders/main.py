@@ -17,7 +17,9 @@ class Adcb_uae_subSpider(scrapy.Spider):
 
     def start_requests(self):
         folder_path = os.path.dirname(os.path.abspath(__file__))
+        c = 0
         for file_name in os.listdir(folder_path):
+            c += 1
             if file_name.endswith(".mhtml") and '-' in file_name:
             # if file_name.endswith(".mhtml"):
                 # print(file_name)
@@ -29,6 +31,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
                     callback=self.parse,
                 )
                 # return
+        # print(c)
 
     def parse(self, response):
         # print(response.text)
