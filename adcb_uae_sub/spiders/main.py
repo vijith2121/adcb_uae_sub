@@ -150,15 +150,17 @@ class Adcb_uae_subSpider(scrapy.Spider):
 
         if Interest_Profit_OS and '</td>' in Interest_Profit_OS:
             Interest_Profit_OS = Interest_Profit_OS.split('</td>')[0].strip()
-            	
+        # print(cleaned_text.replace('&=nbsp;', '').split('Last payment date')[-1].strip())
         try:
             Last_payment_date  = [
                 item for item in cleaned_text.replace('&=nbsp;', '').split('Last payment date')[-1].strip().split('</td>') if item.strip()
                 ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
+            
         except Exception as e:
             print(e)
             Last_payment_date = ''
-        
+            
+        # Last payment date
         if not Last_payment_date or len(Last_payment_date) > 1200:
             try:
                 Last_payment_date  = cleaned_text.replace('&=nbsp;', '').split('Last payment Date')[-1].strip().split('class="data"')[1].split('</td>')[0].replace('&nbsp=;', '').replace('>', '').strip()
@@ -174,6 +176,8 @@ class Adcb_uae_subSpider(scrapy.Spider):
             Last_payment_amount  = [
                 item for item in cleaned_text.replace('&=nbsp;', '').split('Last payment amount')[-1].strip().split('</td>') if item.strip()
                 ][0].split('nowrap="">')[-1].strip().replace('=', '').strip().split('"data">')[-1].replace('&nbsp;', '')
+            # print(cleaned_text.replace('&=nbsp;', '').split('Last payment amount')[-1].strip())
+            # print(Last_payment_date, '========================')
         except Exception as e:
             print(e)
             Last_payment_amount = ''
@@ -578,39 +582,39 @@ class Adcb_uae_subSpider(scrapy.Spider):
                 data['Credit_card_limit'] = str(Credit_card_limit).replace('&nbsp;', '') if Credit_card_limit and len(Credit_card_limit) < 30 else ''
                 # data['Card_Days_past_due'] = str(Card_Days_past_due).replace('&nbsp;', '') if Card_Days_past_due and len(Card_Days_past_due) < 30 else ''
 
-        data['Issue_date'] = clean(Issue_date).replace('&nbsp;', '') if Issue_date and len(Issue_date) < 10 else ''
-        data['Next_due_date'] = clean(Next_due_date).replace('&nbsp;', '') if Next_due_date and len(Next_due_date) < 10 else ''
-        data['Total_Overdue_amount'] = clean(Total_Overdue_amount).replace('&nbsp;', '') if Total_Overdue_amount and len(Total_Overdue_amount) < 10 else ''
-        data['Credit_Shield_Flag_or_Uniq_acno'] = clean(Credit_Shield_Flag_or_Uniq_acno).replace('&nbsp;', '') if Credit_Shield_Flag_or_Uniq_acno and len(Credit_Shield_Flag_or_Uniq_acno) < 25 else ''
-        data['Outstanding'] = clean(Outstanding).replace('&nbsp;', '') if Outstanding and len(Outstanding) < 25 else ''
-        data['Principal_OS'] = clean(Principal_OS).replace('&nbsp;', '') if Principal_OS and len(Principal_OS) < 25 else ''
-        data['Interest_Profit_OS'] = clean(Interest_Profit_OS).replace('&nbsp;', '') if Interest_Profit_OS and len(Interest_Profit_OS) < 25 else ''
-        data['Last_payment_date'] = clean(Last_payment_date).replace('&nbsp;', '') if Last_payment_date and len(Last_payment_date) < 25 else ''
-        data['Last_payment_amount'] = clean(Last_payment_amount).replace('&nbsp;', '').replace('&nb=sp;', '') if Last_payment_amount and len(Last_payment_amount) < 25 else ''
-        data['scrape_date'] = str(scrape_date).replace('&nbsp;', '') if scrape_date else ''
-        data['Product_Code'] = str(Product_Code).replace('&nbsp;', '') if Product_Code and len(Product_Code) < 30 else ''
-        data['OD_Limit_Set_Date'] = str(OD_Limit_Set_Date).replace('&nbsp;', '') if OD_Limit_Set_Date and len(OD_Limit_Set_Date) < 20 else ''
-        data['OD_Limit_End_Date'] = str(OD_Limit_End_Date).replace('&nbsp;', '') if OD_Limit_End_Date and len(OD_Limit_End_Date) < 20 else ''
+        data['Issue_date'] = clean(Issue_date).replace('&nbsp;', '').replace(cid_no, '') if Issue_date and len(Issue_date) < 10 else ''
+        data['Next_due_date'] = clean(Next_due_date).replace('&nbsp;', '').replace(cid_no, '') if Next_due_date and len(Next_due_date) < 10 else ''
+        data['Total_Overdue_amount'] = clean(Total_Overdue_amount).replace('&nbsp;', '').replace(cid_no, '') if Total_Overdue_amount and len(Total_Overdue_amount) < 10 else ''
+        data['Credit_Shield_Flag_or_Uniq_acno'] = clean(Credit_Shield_Flag_or_Uniq_acno).replace('&nbsp;', '').replace(cid_no, '') if Credit_Shield_Flag_or_Uniq_acno and len(Credit_Shield_Flag_or_Uniq_acno) < 25 else ''
+        data['Outstanding'] = clean(Outstanding).replace('&nbsp;', '').replace(cid_no, '') if Outstanding and len(Outstanding) < 25 else ''
+        data['Principal_OS'] = clean(Principal_OS).replace('&nbsp;', '').replace(cid_no, '') if Principal_OS and len(Principal_OS) < 25 else ''
+        data['Interest_Profit_OS'] = clean(Interest_Profit_OS).replace('&nbsp;', '').replace(cid_no, '') if Interest_Profit_OS and len(Interest_Profit_OS) < 25 else ''
+        data['Last_payment_date'] = clean(Last_payment_date).replace('&nbsp;', '').replace(cid_no, '') if Last_payment_date and len(Last_payment_date) < 25 else ''
+        data['Last_payment_amount'] = clean(Last_payment_amount).replace('&nbsp;', '').replace('&nb=sp;', '').replace(cid_no, '') if Last_payment_amount and len(Last_payment_amount) < 25 else ''
+        data['scrape_date'] = str(scrape_date).replace('&nbsp;', '').replace(cid_no, '') if scrape_date else ''
+        data['Product_Code'] = str(Product_Code).replace('&nbsp;', '').replace(cid_no, '') if Product_Code and len(Product_Code) < 30 else ''
+        data['OD_Limit_Set_Date'] = str(OD_Limit_Set_Date).replace('&nbsp;', '').replace(cid_no, '') if OD_Limit_Set_Date and len(OD_Limit_Set_Date) < 20 else ''
+        data['OD_Limit_End_Date'] = str(OD_Limit_End_Date).replace('&nbsp;', '').replace(cid_no, '') if OD_Limit_End_Date and len(OD_Limit_End_Date) < 20 else ''
         # data['Days_Past_Due'] = str(Days_Past_Due).replace('&nbsp;', '') if Days_Past_Due and len(Days_Past_Due) < 20 else ''
-        data['Current_Balance'] = str(Current_Balance).replace('&nbsp;', '') if Current_Balance and len(Current_Balance) < 20 else ''
-        data['Interest_Amount'] = str(Interest_Amount).replace('&nbsp;', '') if Interest_Amount and len(Interest_Amount) < 20 else ''
-        data['Utilisation'] = str(Utilisation).replace('&nbsp;', '') if Utilisation and len(Utilisation) < 20 else ''
-        data['Interest_In_Suspense'] = str(Interest_In_Suspense).replace('&nbsp;', '') if Interest_In_Suspense and len(Interest_In_Suspense) < 20 else ''
-        data['Total_Due'] = str(Total_Due).replace('&nbsp;', '') if Total_Due and len(Total_Due) < 20 else ''
-        data['Expiry_flag'] = str(Expiry_flag).replace('&nbsp;', '') if Expiry_flag and len(Expiry_flag) < 20 else ''
+        data['Current_Balance'] = str(Current_Balance).replace('&nbsp;', '').replace(cid_no, '') if Current_Balance and len(Current_Balance) < 20 else ''
+        data['Interest_Amount'] = str(Interest_Amount).replace('&nbsp;', '').replace(cid_no, '') if Interest_Amount and len(Interest_Amount) < 20 else ''
+        data['Utilisation'] = str(Utilisation).replace('&nbsp;', '').replace(cid_no, '') if Utilisation and len(Utilisation) < 20 else ''
+        data['Interest_In_Suspense'] = str(Interest_In_Suspense).replace('&nbsp;', '').replace(cid_no, '') if Interest_In_Suspense and len(Interest_In_Suspense) < 20 else ''
+        data['Total_Due'] = str(Total_Due).replace('&nbsp;', '').replace(cid_no, '') if Total_Due and len(Total_Due) < 20 else ''
+        data['Expiry_flag'] = str(Expiry_flag).replace('&nbsp;', '').replace(cid_no, '') if Expiry_flag and len(Expiry_flag) < 20 else ''
 
-        data['Current_Bucket_amount'] = str(Current_Bucket_amount).replace('&nbsp;', '') if Current_Bucket_amount and len(Current_Bucket_amount) < 20 else ''
-        data['Bucket_1_amount'] = str(Bucket_1_amount).replace('&nbsp;', '') if Bucket_1_amount and len(Bucket_1_amount) < 20 else ''
-        data['Bucket_2_amount'] = str(Bucket_2_amount).replace('&nbsp;', '') if Bucket_2_amount and len(Bucket_2_amount) < 20 else ''
-        data['Bucket_3_amount'] = str(Bucket_3_amount).replace('&nbsp;', '') if Bucket_3_amount and len(Bucket_3_amount) < 20 else ''
-        data['Bucket_4_amount'] = str(Bucket_4_amount).replace('&nbsp;', '') if Bucket_4_amount and len(Bucket_4_amount) < 20 else ''
-        data['Bucket_5_amount'] = str(Bucket_5_amount).replace('&nbsp;', '').replace('=', '').strip() if Bucket_5_amount and len(Bucket_5_amount) < 20 else ''
-        data['Bucket_6_amount'] = str(Bucket_6_amount).replace('&nbsp;', '') if Bucket_6_amount and len(Bucket_6_amount) < 20 else ''
-        data['Bucket_greater_6_amount'] = str(Bucket_greater_6_amount).replace('&nbsp;', '') if Bucket_greater_6_amount and len(Bucket_greater_6_amount) < 20 else ''
-        data['C_Bkt_N_Bkt'] = str(C_Bkt_N_Bkt).replace('&nbsp;', '') if C_Bkt_N_Bkt and len(C_Bkt_N_Bkt) < 20 else ''
-        data['flag'] = str(flag).replace('&nbsp;', '') if flag and len(flag) < 20 else ''
-        data['cycle_date'] = str(cycle_date).replace('&nbsp;', '') if cycle_date and len(cycle_date) < 20 else ''
-        data['Queue_Agent'] = str(Queue_Agent).replace('&nbsp;', '') if Queue_Agent and len(Queue_Agent) < 20 else ''
-        data['Delinquency_string'] = str(Delinquency_string).replace('&nbsp;', '') if Delinquency_string and len(Delinquency_string) < 95 else ''
-        data['Start_of_Bucket_Next_Bucket'] = str(Start_of_Bucket_Next_Bucket).replace('&nbsp;', '') if Start_of_Bucket_Next_Bucket and len(Start_of_Bucket_Next_Bucket) < 20 else ''
+        data['Current_Bucket_amount'] = str(Current_Bucket_amount).replace('&nbsp;', '').replace(cid_no, '') if Current_Bucket_amount and len(Current_Bucket_amount) < 20 else ''
+        data['Bucket_1_amount'] = str(Bucket_1_amount).replace('&nbsp;', '').replace(cid_no, '') if Bucket_1_amount and len(Bucket_1_amount) < 20 else ''
+        data['Bucket_2_amount'] = str(Bucket_2_amount).replace('&nbsp;', '').replace(cid_no, '') if Bucket_2_amount and len(Bucket_2_amount) < 20 else ''
+        data['Bucket_3_amount'] = str(Bucket_3_amount).replace('&nbsp;', '').replace(cid_no, '') if Bucket_3_amount and len(Bucket_3_amount) < 20 else ''
+        data['Bucket_4_amount'] = str(Bucket_4_amount).replace('&nbsp;', '').replace(cid_no, '') if Bucket_4_amount and len(Bucket_4_amount) < 20 else ''
+        data['Bucket_5_amount'] = str(Bucket_5_amount).replace('&nbsp;', '').replace('=', '').strip().replace(cid_no, '') if Bucket_5_amount and len(Bucket_5_amount) < 20 else ''
+        data['Bucket_6_amount'] = str(Bucket_6_amount).replace('&nbsp;', '').replace(cid_no, '') if Bucket_6_amount and len(Bucket_6_amount) < 20 else ''
+        data['Bucket_greater_6_amount'] = str(Bucket_greater_6_amount).replace('&nbsp;', '').replace(cid_no, '') if Bucket_greater_6_amount and len(Bucket_greater_6_amount) < 20 else ''
+        data['C_Bkt_N_Bkt'] = str(C_Bkt_N_Bkt).replace('&nbsp;', '').replace(cid_no, '') if C_Bkt_N_Bkt and len(C_Bkt_N_Bkt) < 20 else ''
+        data['flag'] = str(flag).replace('&nbsp;', '').replace(cid_no, '') if flag and len(flag) < 20 else ''
+        data['cycle_date'] = str(cycle_date).replace('&nbsp;', '').replace(cid_no, '') if cycle_date and len(cycle_date) < 20 else ''
+        data['Queue_Agent'] = str(Queue_Agent).replace('&nbsp;', '').replace(cid_no, '') if Queue_Agent and len(Queue_Agent) < 20 else ''
+        data['Delinquency_string'] = str(Delinquency_string).replace('&nbsp;', '').replace(cid_no, '') if Delinquency_string and len(Delinquency_string) < 95 else ''
+        data['Start_of_Bucket_Next_Bucket'] = str(Start_of_Bucket_Next_Bucket).replace('&nbsp;', '').replace(cid_no, '') if Start_of_Bucket_Next_Bucket and len(Start_of_Bucket_Next_Bucket) < 20 else ''
         yield Product(**data)
