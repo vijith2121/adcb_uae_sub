@@ -585,7 +585,7 @@ class Adcb_uae_subSpider(scrapy.Spider):
         data['Issue_date'] = clean(Issue_date).replace('&nbsp;', '').replace(cid_no, '') if Issue_date and len(Issue_date) < 10 else ''
         data['Next_due_date'] = clean(Next_due_date).replace('&nbsp;', '').replace(cid_no, '') if Next_due_date and len(Next_due_date) < 10 else ''
         data['Total_Overdue_amount'] = clean(Total_Overdue_amount).replace('&nbsp;', '').replace(cid_no, '') if Total_Overdue_amount and len(Total_Overdue_amount) < 10 else ''
-        data['Credit_Shield_Flag_or_Uniq_acno'] = clean(Credit_Shield_Flag_or_Uniq_acno).replace('&nbsp;', '').replace(cid_no, '') if Credit_Shield_Flag_or_Uniq_acno and len(Credit_Shield_Flag_or_Uniq_acno) < 25 else ''
+        data['Credit_Shield_Flag_or_Uniq_acno'] = clean(Credit_Shield_Flag_or_Uniq_acno).replace('&nbsp;', '') if Credit_Shield_Flag_or_Uniq_acno and len(Credit_Shield_Flag_or_Uniq_acno) < 25 else ''
         data['Outstanding'] = clean(Outstanding).replace('&nbsp;', '').replace(cid_no, '') if Outstanding and len(Outstanding) < 25 else ''
         data['Principal_OS'] = clean(Principal_OS).replace('&nbsp;', '').replace(cid_no, '') if Principal_OS and len(Principal_OS) < 25 else ''
         data['Interest_Profit_OS'] = clean(Interest_Profit_OS).replace('&nbsp;', '').replace(cid_no, '') if Interest_Profit_OS and len(Interest_Profit_OS) < 25 else ''
